@@ -18,7 +18,7 @@ function App() {
       <form>
         <input type="text" placeholder='Название поста'/>
         <input type="text" placeholder='Описание поста'/>
-        <MyButton>Создать Пост</MyButton>
+        <MyButton disabled>Создать Пост</MyButton>
       </form>
       <PostList posts={posts} title={'Список постов 1 '}/>
     </div>

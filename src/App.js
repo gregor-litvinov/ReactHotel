@@ -8,75 +8,55 @@ import MyButton from "./components/UI/button/MyButton";
 import MyInput from "./components/UI/input/MyInput";
 import PostForm from "./components/UI/PostForm";
 import MySelect from "./components/UI/select/MySelect";
+import PostFilter from "./components/PostFilter";
 
 function App() {
   const [posts, setPosts] = useState([
-    {id: 1, title: 'dd', body: 'ff' },
-    {id: 2, title: 'zz', body: 'dd' },
-    {id: 3, title: 'bb', body: 'oo' }
+    {id: 1, title: 'dd', body: 'ff'},
+    {id: 2, title: 'zz', body: 'dd'},
+    {id: 3, title: 'bb', body: 'oo'}
   ])
-  const[selectSort, setSelectorSort] = useState('')
-  const[searchQuery, setSearchQuery] =  useState('')
+  const [filter, setFilter] = useState({sort: '', query: ''})
   
-  function getSortedPosts() {
-  console.log('щтработала функция Сортед Поста')
-    if(selectSort) {
-      return [...posts].sort((a, b) => a[selectSort].localeCompare(b[selectSort]))
-    }
-    return posts;
-  }
   
   const sortedPost = useMemo(() => {
+    console.log('щтработала функция Сортед Поста')
+    if (filter.sort) {
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
+    }
+    return posts;
+  }, [filter.sort, posts])
   
-  })
+  const sortAndSearchedPost = useMemo(() => {
+    return sortedPost.filter(post => post.title.toLowerCase().includes(filter.query))
+  }, [filter.query, sortedPost])
   
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
   }
   
   const removePost = (post) => {
-   //setPosts(posts.filter(p => p.id !== post.id))
-    const newArr = posts.filter((value) => {
-      return post.id !== value.id
-    } )
-      setPosts(newArr)
+    setPosts(posts.filter(p => p.id !== post.id))
   }
-  
-  const sortPost = (sort) => {
-    setSelectorSort(sort)
-  }
-  
-  return (
-    <div className="App">
-      <PostForm len={posts.length} create={createPost}/>
-      <hr style={{margin: '15px 0'}}/>
-      <div>
-        <MyInput
-        placholder={'Поиск...'}
-        value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
-        />
-        <MySelect
-            value={selectSort}
-            onChange={sortPost}
-            defaultValue='Сортировка'
-            option={[
-              {value: 'title', name: 'По Названию'},
-              {value: 'body', name: 'По Описанию'}
-            ]}
-        />
-      </div>
-      {posts.length !==0
-      ? <PostList remove={removePost} posts={sortedPost} title={'Список постов'}/>
-      :
-        <h1 style={{textAlign: 'center'}}>
-        Посты не найдены!
-          </h1>
-      }
-      
-    </div>
-  
-  );
-}
 
-export default App;
+    return (
+      <div className="App">
+        <PostForm len={posts.length} create={createPost}/>
+        <hr style={{margin: '15px 0'}}/>
+        <PostFilter
+          filter={filter}
+          setFilter={setFilter}
+        />
+        {sortAndSearchedPost.length
+          ?
+           <PostList remove={removePost} posts={sortAndSearchedPost} title={'Список постов'}/>
+          :
+          <h1 style={{textAlign: 'center'}}>
+            Посты не найдены!
+          </h1>
+        }
+      </div>
+    );
+  }
+
+    export default App;

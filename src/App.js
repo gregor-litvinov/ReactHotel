@@ -18,6 +18,8 @@ function App() {
     {id: 3, title: 'bb', body: 'oo'}
   ])
   const [filter, setFilter] = useState({sort: '', query: ''})
+  const [counter, setCounter] = useState(false)
+  
   
   
   const sortedPost = useMemo(() => {
@@ -36,13 +38,21 @@ function App() {
     setPosts([...posts, newPost])
   }
   
+  const openModal = () => {
+   setCounter( (prevCount) => {
+     return !prevCount
+   })
+  }
+  
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
 
     return (
       <div className="App">
-        <MyModal></MyModal>
+        <button  onClick={openModal}>butn</button>
+         <MyModal isActive={counter} children={'rrrgrgr'}/>
+        
         <PostForm len={posts.length} create={createPost}/>
         <hr style={{margin: '15px 0'}}/>
         <PostFilter
@@ -50,7 +60,6 @@ function App() {
           setFilter={setFilter}
         />
            <PostList remove={removePost} posts={sortAndSearchedPost} title={'Список постов'}/>
-        }
       </div>
     );
   }

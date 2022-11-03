@@ -1,13 +1,16 @@
 import React from 'react';
-import cl from 'MyModal.module.css'
+import cl from '../myModal/MyModal.module.css'
 
 
-const MyModal = ({children}) => {
+const MyModal = ({children, isActive}) => {
+	const activeClass = isActive ? cl.active : cl.myModal
+	console.log(cl)
 	return (
-		<div className={[cl.MyModal, cl.active].join(' ')}>
-			<div className={cl.myModalContent}></div>
-			{children}
-			
+		<div className={activeClass}>
+			<div className={cl.myModalContent}>
+				{children}
+				
+			</div>
 		</div>
 	);
 };

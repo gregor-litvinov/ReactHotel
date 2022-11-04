@@ -3,10 +3,10 @@ import cl from '../myModal/MyModal.module.css'
 
 
 const MyModal = ({children, isActive}) => {
-	const activeClass = isActive ? cl.active : cl.myModal
-	console.log(cl)
+	const activeClass = isActive ? 'active' : ''
+	console.log(activeClass)
 	return (
-		<div className={activeClass}>
+		<div className={`MyModal ${activeClass}`}>
 			<div className={cl.myModalContent}>
 				{children}
 				

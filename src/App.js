@@ -51,7 +51,7 @@ function App() {
     return (
       <div className="App">
         <button  onClick={openModal}>butn</button>
-         <MyModal isActive={counter} children={'rrrgrgr'}/>
+         <MyModal isActive={counter} children={'ggggg'}/>
         
         <PostForm len={posts.length} create={createPost}/>
         <hr style={{margin: '15px 0'}}/>

@@ -20,6 +20,8 @@ function App() {
   
   console.log('reRender')
   const [filter, setFilter] = useState({sort: '', query: ''})
+  const[modal, setModal] = useState(false)
+  
   useEffect(() => {
     
     console.log(posts.length)
@@ -42,6 +44,7 @@ function App() {
   
   const createPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
   }
   
   
@@ -51,7 +54,10 @@ function App() {
 
     return (
       <div className="App">
-         <MyModal visible={false}>
+        <MyButton style={{marginTop: 30}} onClick={() => setModal(true)}>
+          Создать пользователя.
+        </MyButton>
+         <MyModal visible={modal} setVisible={setModal}>
            <PostForm create={createPost}/>
          </MyModal>
         <hr style={{margin: '15px 0'}}/>

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo, useState, useEffect} from "react";
 import Header from "./components/Header/Header";
 import ClassCounter from './components/ClassCounter'
 import '../src/components/style/App.css'
@@ -9,7 +9,7 @@ import MyInput from "./components/UI/input/MyInput";
 import PostForm from "./components/UI/PostForm";
 import MySelect from "./components/UI/select/MySelect";
 import PostFilter from "./components/PostFilter";
-import MyModal from "./components/UI/myModal/MyModal";
+import MyModal from "./components/UI/MyModal/MyModal";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -17,8 +17,14 @@ function App() {
     {id: 2, title: 'zz', body: 'dd'},
     {id: 3, title: 'bb', body: 'oo'}
   ])
+  
+  console.log('reRender')
   const [filter, setFilter] = useState({sort: '', query: ''})
-  const [counter, setCounter] = useState(false)
+  useEffect(() => {
+    
+    console.log(posts.length)
+  }, []
+  )
   
   
   
@@ -38,11 +44,6 @@ function App() {
     setPosts([...posts, newPost])
   }
   
-  const openModal = () => {
-   setCounter( (prevCount) => {
-     return !prevCount
-   })
-  }
   
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
@@ -50,10 +51,9 @@ function App() {
 
     return (
       <div className="App">
-        <button  onClick={openModal}>butn</button>
-         <MyModal isActive={counter} children={'ggggg'}/>
-        
-        <PostForm len={posts.length} create={createPost}/>
+         <MyModal visible={false}>
+           <PostForm create={createPost}/>
+         </MyModal>
         <hr style={{margin: '15px 0'}}/>
         <PostFilter
           filter={filter}

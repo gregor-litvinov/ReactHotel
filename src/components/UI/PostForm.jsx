@@ -11,10 +11,8 @@ const PostForm = (props) => {
 		setPostName('')
 		setPostText('')
 	}
-	
 	return (
 		<form>
-			
 			<MyInput
 				value={postName}
 				onChange={(e) => {

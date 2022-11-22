@@ -20,12 +20,9 @@ function App() {
     setPosts([...posts, newPost])
     setModal(false)
   }
-  
-  
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
   }
-
     return (
       <div className="App">
         <MyButton style={{marginTop: 30}} onClick={() => setModal(true)}>

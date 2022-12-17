@@ -9,6 +9,7 @@ import MyModal from "./components/UI/MyModal/MyModal";
 import {usePosts} from "./hooks/usePosts";
 import axios from 'axios';
 import PostService from "./API/PostService";
+import Loader from "./components/UI/Loader/Loader";
 
 
 function App() {
@@ -30,9 +31,12 @@ function App() {
   }
   async function  fetchPosts() {
     setIsPostsLoading(true)
-    const posts = await PostService.getAll()
-    setPosts(posts)
-    setIsPostsLoading(false)
+    setTimeout(async () => {
+      const posts = await PostService.getAll()
+      setPosts(posts)
+      setIsPostsLoading(false)
+    }, 1000)
+   
   }
   const removePost = (post) => {
     setPosts(posts.filter(p => p.id !== post.id))
@@ -52,9 +56,8 @@ function App() {
           setFilter={setFilter}
         />
         {isPostsLoading
-         ? <h1>loading......</h1>
+         ? <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}><Loader/></div>
          : <PostList remove={removePost} posts={sortAndSearchedPost} title={'Список постов'}/>
-  
         }
       </div>
     );
